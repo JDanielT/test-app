@@ -25,31 +25,24 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente) {
-        return new ResponseEntity<>(clienteRepository.salvar(cliente), HttpStatus.CREATED);
+    public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
+        return new ResponseEntity<>(clienteRepository.save(cliente), HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<Cliente>> buscarTodos() {
-        return new ResponseEntity<>(clienteRepository.buscarTodos(), HttpStatus.OK);
+    public ResponseEntity<Collection<Cliente>> findAll() {
+        return new ResponseEntity<>(clienteRepository.findAll(), HttpStatus.OK);
     }
     
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Cliente> alterar(@RequestBody Cliente cliente){
-        Cliente alterado = clienteRepository.alterar(cliente);
-        if(alterado == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(cliente, HttpStatus.OK);
+        return new ResponseEntity<>(clienteRepository.save(cliente), HttpStatus.OK);
     }
     
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Cliente> excluir(@PathVariable long id){
-        Cliente removido = clienteRepository.excluir(id);
-        if(removido == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(removido, HttpStatus.OK);
+        clienteRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
