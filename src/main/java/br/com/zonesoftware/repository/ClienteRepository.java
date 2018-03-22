@@ -33,8 +33,12 @@ public class ClienteRepository {
         return clientes.values();
     }
     
-    public Cliente excluir(Cliente cliente){
-        return clientes.remove(cliente.getId());
+    public Cliente alterar(Cliente cliente){
+        return clientes.put(cliente.getId(), cliente);
+    }
+    
+    public Cliente excluir(long id){
+        return clientes.remove(id);
     }
     
 }
